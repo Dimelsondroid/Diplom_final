@@ -1,5 +1,6 @@
 from distutils.util import strtobool
 
+import ujson
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
@@ -213,10 +214,11 @@ class BasketView(APIView):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
 
-        items_sting = request.data.get('items')
-        if items_sting:
+        items_string = request.data.get('items')
+
+        if items_string:
             try:
-                items_dict = load_json(items_sting)
+                items_dict = load_json(items_string)
             except ValueError:
                 JsonResponse({'Status': False, 'Errors': 'Неверный формат запроса'})
             else:
@@ -245,9 +247,9 @@ class BasketView(APIView):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
 
-        items_sting = request.data.get('items')
-        if items_sting:
-            items_list = items_sting.split(',')
+        items_string = request.data.get('items')
+        if items_string:
+            items_list = items_string.split(',')
             basket, _ = Order.objects.get_or_create(user_id=request.user.id, state='basket')
             query = Q()
             objects_deleted = False
@@ -266,10 +268,10 @@ class BasketView(APIView):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
 
-        items_sting = request.data.get('items')
-        if items_sting:
+        items_string = request.data.get('items')
+        if items_string:
             try:
-                items_dict = load_json(items_sting)
+                items_dict = load_json(items_string)
             except ValueError:
                 JsonResponse({'Status': False, 'Errors': 'Неверный формат запроса'})
             else:
