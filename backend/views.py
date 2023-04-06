@@ -9,8 +9,10 @@ from django.db import IntegrityError
 from django.db.models import Q, Sum, F
 from django.http import JsonResponse
 from requests import get
+from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -394,47 +396,32 @@ class PartnerOrders(APIView):
 
 
 class ContactViewSet(ModelViewSet):
-    serializer_class = ContactSerializer
+    # pass
+    serializer_class = ContactSerializer()
     queryset = Contact.objects.all()
 
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
-class ContactView(APIView):
-    """
-    Класс для работы с контактами покупателей
-    """
-
-    # получить мои контакты
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-        contact = Contact.objects.filter(
-            user_id=request.user.id)
+    def list(self, request, *args, **kwargs):
+        contact = Contact.objects.filter(user_id=request.user.id)
         serializer = ContactSerializer(contact, many=True)
         return Response(serializer.data)
 
-    # добавить новый контакт
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
+    def create(self, request, *args, **kwargs):
         if {'city', 'street', 'phone'}.issubset(request.data):
             request.data._mutable = True
             request.data.update({'user': request.user.id})
             serializer = ContactSerializer(data=request.data)
-
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse({'Status': True})
-            else:
-                JsonResponse({'Status': False, 'Errors': serializer.errors})
 
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-    # удалить контакт
-    def delete(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
+    def destroy(self, request, *args, **kwargs):
         items_sting = request.data.get('items')
         if items_sting:
             items_list = items_sting.split(',')
@@ -448,13 +435,8 @@ class ContactView(APIView):
             if objects_deleted:
                 deleted_count = Contact.objects.filter(query).delete()[0]
                 return JsonResponse({'Status': True, 'Удалено объектов': deleted_count})
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
-    # редактировать контакт
-    def put(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
-
+    def update(self, request, *args, **kwargs):
         if 'id' in request.data:
             if request.data['id'].isdigit():
                 contact = Contact.objects.filter(id=request.data['id'], user_id=request.user.id).first()
@@ -467,7 +449,78 @@ class ContactView(APIView):
                     else:
                         JsonResponse({'Status': False, 'Errors': serializer.errors})
 
-        return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+
+class ContactView(APIView):
+    pass
+    # """
+    # Класс для работы с контактами покупателей
+    # """
+    #
+    # # получить мои контакты
+    # def get(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
+    #     contact = Contact.objects.filter(
+    #         user_id=request.user.id)
+    #     serializer = ContactSerializer(contact, many=True)
+    #     return Response(serializer.data)
+    #
+    # # добавить новый контакт
+    # def post(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
+    #
+    #     if {'city', 'street', 'phone'}.issubset(request.data):
+    #         request.data._mutable = True
+    #         request.data.update({'user': request.user.id})
+    #         serializer = ContactSerializer(data=request.data)
+    #
+    #         if serializer.is_valid():
+    #             serializer.save()
+    #             return JsonResponse({'Status': True})
+    #         else:
+    #             JsonResponse({'Status': False, 'Errors': serializer.errors})
+    #
+    #     return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+    #
+    # # удалить контакт
+    # def delete(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
+    #
+    #     items_sting = request.data.get('items')
+    #     if items_sting:
+    #         items_list = items_sting.split(',')
+    #         query = Q()
+    #         objects_deleted = False
+    #         for contact_id in items_list:
+    #             if contact_id.isdigit():
+    #                 query = query | Q(user_id=request.user.id, id=contact_id)
+    #                 objects_deleted = True
+    #
+    #         if objects_deleted:
+    #             deleted_count = Contact.objects.filter(query).delete()[0]
+    #             return JsonResponse({'Status': True, 'Удалено объектов': deleted_count})
+    #     return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
+    #
+    # # редактировать контакт
+    # def put(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
+    #
+    #     if 'id' in request.data:
+    #         if request.data['id'].isdigit():
+    #             contact = Contact.objects.filter(id=request.data['id'], user_id=request.user.id).first()
+    #             print(contact)
+    #             if contact:
+    #                 serializer = ContactSerializer(contact, data=request.data, partial=True)
+    #                 if serializer.is_valid():
+    #                     serializer.save()
+    #                     return JsonResponse({'Status': True})
+    #                 else:
+    #                     JsonResponse({'Status': False, 'Errors': serializer.errors})
+    #
+    #     return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
 
 class OrderView(APIView):

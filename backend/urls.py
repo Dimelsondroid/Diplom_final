@@ -6,7 +6,7 @@ from backend.views import PartnerUpdate, RegisterAccount, LoginAccount, Category
     BasketView, AccountDetails, ContactView, OrderView, PartnerState, PartnerOrders, ConfirmAccount, ContactViewSet
 
 router = DefaultRouter()
-router.register(r'user/contact', ContactViewSet)
+router.register(r'user/contact', ContactViewSet, basename='user-contact')
 
 app_name = 'backend'
 urlpatterns = [

@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "e8930324-97a9-4d3a-843d-7b1f98fd7890",
 		"name": "netology-pd-diplom",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19735792"
 	},
 	"item": [
 		{
@@ -18,37 +19,37 @@
 							"formdata": [
 								{
 									"key": "first_name",
-									"value": "QQQ",
+									"value": "AAA",
 									"type": "text"
 								},
 								{
 									"key": "last_name",
-									"value": "QQQ",
+									"value": "AAA",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "QQQ@gmail.com",
+									"value": "AAA@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "QQQ",
+									"value": "AAA",
 									"type": "text"
 								},
 								{
 									"key": "company",
-									"value": "QQQ",
+									"value": "AAA",
 									"type": "text"
 								},
 								{
 									"key": "position",
-									"value": "QQQ",
+									"value": "AAA",
 									"type": "text"
 								},
 								{
 									"key": "type",
-									"value": "shop",
+									"value": "buyer",
 									"type": "text"
 								}
 							]
@@ -76,12 +77,12 @@
 							"formdata": [
 								{
 									"key": "email",
-									"value": "QQQ@gmail.com",
+									"value": "AAA@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "token",
-									"value": "8b46e6a2b3fcd677349a008",
+									"value": "d3a1abfc5d94361f50fb22150e9480e2a190e6e6dfdc",
 									"type": "text"
 								}
 							]
@@ -107,18 +108,19 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token c6b151fc8159bda8a2967f98770dc8aaa158440a",
+								"value": "Token 305c5b46c4cd1a412cc05a598ded2e0e16a1e1c4",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{url}}/user/contact",
+							"raw": "{{url}}/user/contact/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								"contact"
+								"contact",
+								""
 							]
 						}
 					},
@@ -132,7 +134,7 @@
 							{
 								"key": "Authorization",
 								"type": "text",
-								"value": "Token c6b151fc8159bda8a2967f98770dc8aaa158440a"
+								"value": "Token 305c5b46c4cd1a412cc05a598ded2e0e16a1e1c4"
 							}
 						],
 						"body": {
@@ -160,12 +162,12 @@
 								},
 								{
 									"key": "building",
-									"value": "321",
+									"value": "123",
 									"type": "text"
 								},
 								{
 									"key": "apartment",
-									"value": "321",
+									"value": "123",
 									"type": "text"
 								},
 								{
@@ -176,13 +178,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/user/contact",
+							"raw": "{{url}}/user/contact/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								"contact"
+								"contact",
+								""
 							]
 						}
 					},
@@ -191,12 +194,12 @@
 				{
 					"name": "редактировать контакты",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Authorization",
 								"type": "text",
-								"value": "Token c6b151fc8159bda8a2967f98770dc8aaa158440a"
+								"value": "Token 305c5b46c4cd1a412cc05a598ded2e0e16a1e1c4"
 							}
 						],
 						"body": {
@@ -234,7 +237,7 @@
 								},
 								{
 									"key": "id",
-									"value": "3",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -245,13 +248,15 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/user/contact",
+							"raw": "{{url}}/user/contact/update/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								"contact"
+								"contact",
+								"update",
+								""
 							]
 						}
 					},
@@ -271,7 +276,7 @@
 							{
 								"key": "Authorization",
 								"type": "text",
-								"value": "Token c6b151fc8159bda8a2967f98770dc8aaa158440a"
+								"value": "Token 305c5b46c4cd1a412cc05a598ded2e0e16a1e1c4"
 							}
 						],
 						"body": {
@@ -279,19 +284,21 @@
 							"formdata": [
 								{
 									"key": "items",
-									"value": "3,2",
+									"value": "4,5",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/user/contact",
+							"raw": "{{url}}/user/contact/destroy/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								"contact"
+								"contact",
+								"destroy",
+								""
 							]
 						}
 					},
@@ -367,7 +374,7 @@
 							{
 								"key": "Authorization",
 								"type": "text",
-								"value": "Token c7b308020aea6dcc815b33f2c4a2d49dcdeb4772"
+								"value": "Token f21fc8a3d335c653698c947de05c41a60a0bf18b"
 							}
 						],
 						"body": {
@@ -428,12 +435,12 @@
 							"formdata": [
 								{
 									"key": "email",
-									"value": "AAA@gmail.com",
+									"value": "ddd@ddd.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "AAA",
+									"value": "123",
 									"type": "text"
 								}
 							]
