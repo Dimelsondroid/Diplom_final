@@ -13,6 +13,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from ujson import loads as load_json
 from yaml import load as load_yaml, Loader
 
@@ -390,6 +391,11 @@ class PartnerOrders(APIView):
 
         serializer = OrderSerializer(order, many=True)
         return Response(serializer.data)
+
+
+class ContactViewSet(ModelViewSet):
+    serializer_class = ContactSerializer
+    queryset = Contact.objects.all()
 
 
 class ContactView(APIView):
