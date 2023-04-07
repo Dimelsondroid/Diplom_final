@@ -2,35 +2,8 @@
 
 [Документация по запросам в PostMan](https://documenter.getpostman.com/view/5037826/SVfJUrSc) - export запросов Postman в ./Data
 
-## **установка СУБД**
-
-    sudo nano  /etc/apt/sources.list.d/pgdg.list
-    
-    ----->
-    deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
-    <<----
-    
-    
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-    
-    sudo apt-get update
-    
-    sudo apt-get install postgresql-11 postgresql-server-dev-11
-    
-    sudo -u postgres psql postgres
-    
-    create user diplom_user with password 'password';
-    
-    alter role diplom_user set client_encoding to 'utf8';
-    
-    alter role diplom_user set default_transaction_isolation to 'read committed';
-    
-    alter role diplom_user set timezone to 'Europe/Moscow';
-    
-    create database diplom_db owner mploy;
-    alter user mploy createdb;
-
-
+## **Использование**
+    python.exe .\manage.py spectacular --color --file schema.yaml
 
 ## **Получить исходный код**
 
@@ -42,11 +15,11 @@
     
     cd my_diplom
     
-    git clone git@github.com:A-Iskakov/netology_pd_diplom.git
+    git clone git@github.com:Dimelsondroid/Diplom_final.git
     
-    cd netology_pd_diplom
+    cd Diplom_final
     
-    sudo pip3 install  --upgrade pip
+    sudo pip3 install --upgrade pip
     
     sudo pip3 install -r requirements.txt
     
