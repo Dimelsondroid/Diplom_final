@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from ujson import loads as load_json
@@ -30,6 +31,8 @@ class RegisterAccount(APIView):
     """
     Для регистрации покупателей
     """
+    throttle_classes = [AnonRateThrottle]
+
     # Регистрация методом POST
     def post(self, request, *args, **kwargs):
 
