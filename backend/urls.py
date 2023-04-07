@@ -6,11 +6,10 @@ from backend.views import PartnerUpdate, RegisterAccount, LoginAccount, Category
     BasketView, AccountDetails, ContactView, OrderView, PartnerState, PartnerOrders, ConfirmAccount, ContactViewSet
 
 router = DefaultRouter()
-router.register(r'user/contact', ContactViewSet, basename='user-contact')
+router.register('user/contact', ContactViewSet, basename='user-contact')
 
 app_name = 'backend'
 urlpatterns = [
-    path('accounts/', include('allauth.urls')),
     path('', include(router.urls)),
     path('partner/update', PartnerUpdate.as_view(), name='partner-update'),
     path('partner/state', PartnerState.as_view(), name='partner-state'),
@@ -27,6 +26,5 @@ urlpatterns = [
     path('products', ProductInfoView.as_view(), name='shops'),
     path('basket', BasketView.as_view(), name='basket'),
     path('order', OrderView.as_view(), name='order'),
-
 
 ]
