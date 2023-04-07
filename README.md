@@ -1,6 +1,6 @@
 Пример API Сервиса для магазина
 
-[Документация по запросам в PostMan](https://documenter.getpostman.com/view/5037826/SVfJUrSc) 
+[Документация по запросам в PostMan](https://documenter.getpostman.com/view/5037826/SVfJUrSc) - export запросов Postman в ./Data
 
 ## **установка СУБД**
 
