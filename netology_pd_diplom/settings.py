@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'allauth.socialaccount.providers.yandex',
+    'allauth.socialaccount.providers.github',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -59,20 +60,6 @@ INSTALLED_APPS = [
 
     'backend.apps.BackendConfig',
 ]
-
-SITE_ID = 1
-
-SOCIALACCOUNT_PROVIDERS = {
-    'yandex': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '7b3143f3747e44cd89a551f7a8e63498',
-            'secret': 'e92c75f6ba1c4cf187e2c1c5f258ee1c',
-        }
-    }
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,6 +111,10 @@ AUTHENTICATION_BACKENDS = [
 
 ]
 
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = "none"
+LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_ON_GET = True
 
 WSGI_APPLICATION = 'netology_pd_diplom.wsgi.application'
 

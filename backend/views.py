@@ -8,6 +8,7 @@ from django.core.validators import URLValidator
 from django.db import IntegrityError
 from django.db.models import Q, Sum, F
 from django.http import JsonResponse
+from django.views.generic import TemplateView
 from requests import get
 from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
@@ -24,6 +25,10 @@ from backend.models import Shop, Category, Product, ProductInfo, Parameter, Prod
 from backend.serializers import UserSerializer, CategorySerializer, ShopSerializer, ProductInfoSerializer, \
     OrderItemSerializer, OrderSerializer, ContactSerializer
 from backend.signals import new_user_registered, new_order
+
+
+class HomeView(TemplateView):
+    template_name = 'home.html'
 
 
 class RegisterAccount(APIView):
