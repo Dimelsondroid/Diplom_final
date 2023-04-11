@@ -1,26 +1,15 @@
-'''
-Obsolete, using Celery tasks now for email sending
-'''
 
+from django.dispatch import receiver
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-from django.dispatch import receiver, Signal
+from celery import shared_task
 from django_rest_passwordreset.signals import reset_password_token_created
 
 from backend.models import ConfirmEmailToken, User
-from backend.tasks import password_reset_token_created_task
-
-new_user_registered = Signal(
-    # providing_args=['user_id'],
-)
-
-new_order = Signal(
-    # providing_args=['user_id'],
-)
 
 
-@receiver(reset_password_token_created)
-def password_reset_token_created(sender, instance, reset_password_token, **kwargs):
+@shared_task()
+def password_reset_token_created_task(sender, instance, reset_password_token, **kwargs):
     """
     Отправляем письмо с токеном для сброса пароля
     When a token is created, an e-mail needs to be sent to the user
@@ -32,15 +21,23 @@ def password_reset_token_created(sender, instance, reset_password_token, **kwarg
     """
     # send an e-mail to the user
 
-    password_reset_token_created_task.delay(
-        sender, instance, reset_password_token, **kwargs
+    msg = EmailMultiAlternatives(
+        # title:
+        f"Password Reset Token for {reset_password_token.user}",
+        # message:
+        reset_password_token.key,
+        # from:
+        settings.EMAIL_HOST_USER,
+        # to:
+        [reset_password_token.user.email]
     )
+    msg.send()
 
 
-@receiver(new_user_registered)
-def new_user_registered_signal(user_id, **kwargs):
+@shared_task()
+def new_user_registered_task(user_id, **kwargs):
     """
-    отправляем письмо с подтрердждением почты
+    отправляем письмо с подтвердждением почты
     """
     # send an e-mail to the user
     token, _ = ConfirmEmailToken.objects.get_or_create(user_id=user_id)
@@ -58,8 +55,8 @@ def new_user_registered_signal(user_id, **kwargs):
     msg.send()
 
 
-@receiver(new_order)
-def new_order_signal(user_id, **kwargs):
+@shared_task()
+def new_order_task(user_id, **kwargs):
     """
     отправяем письмо при изменении статуса заказа
     """
