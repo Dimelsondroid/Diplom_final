@@ -1,0 +1,31 @@
+[
+  {"model": "backend.Contact",
+    "pk": 2,
+    "fields": {
+      "id": 1,
+      "city": "Moscow",
+      "street": "Lomonosova street 40",
+      "house": "Apartament 28",
+      "structure": "1234",
+      "building": "123345",
+      "apartment": "123345",
+      "phone": "+45465421654",
+      "user_id": 1
+    }
+  },
+  {
+    "model": "backend.Contact",
+    "pk": 3,
+    "fields": {
+      "id": 6,
+      "city": "Moscow",
+      "street": "Lomonosova street 40",
+      "house": "Apartament 28",
+      "structure": "321",
+      "building": "123",
+      "apartment": "123",
+      "phone": "+4950987654",
+      "user_id": 1
+    }
+  }
+]

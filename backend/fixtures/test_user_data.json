@@ -1,0 +1,16 @@
+[
+  {
+    "model": "backend.User",
+    "pk": 1,
+    "fields": {
+      "first_name":"aaa",
+      "last_name":"bbb",
+      "email":"aaa@aaa.com",
+      "password":"aaa",
+      "company":"bbb",
+      "position":"ccc",
+      "type":"buyer",
+      "is_active": "1"
+    }
+  }
+]

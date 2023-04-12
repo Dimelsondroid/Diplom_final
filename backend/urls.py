@@ -5,10 +5,11 @@ from rest_framework.routers import DefaultRouter
 from backend.views import PartnerUpdate, RegisterAccount, LoginAccount, CategoryView, ShopView, ProductInfoView, \
     BasketView, AccountDetails, ContactView, OrderView, PartnerState, PartnerOrders, ConfirmAccount, ContactViewSet
 
+app_name = 'backend'
+
 router = DefaultRouter()
 router.register(r'user/contact', ContactViewSet, basename='user-contact')
 
-app_name = 'backend'
 urlpatterns = [
     path('', include(router.urls)),
     path('partner/update', PartnerUpdate.as_view(), name='partner-update'),
